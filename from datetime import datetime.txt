@@ -1,0 +1,110 @@
+from datetime import datetime
+from flask import Flask, render_template_string
+
+app = Flask(__name__)
+
+
+@app.route("/")
+def home():
+  # Python backend logic running right before rendering the page
+  server_time = datetime.now().strftime("%A, %B %d, %Y - %I:%M:%S %p")
+  welcome_message = "Welcome to My Python Single-File Website"
+
+  html_content = """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Python Single File Website</title>
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                margin: 0;
+                padding: 0;
+                line-height: 1.6;
+                color: #333;
+                background-color: #f4f4f9;
+            }
+            header {
+                background: #2c3e50;
+                color: #ffffff;
+                padding: 1rem 0;
+                text-align: center;
+            }
+            .hero {
+                background: #34495e;
+                color: white;
+                text-align: center;
+                padding: 60px 20px;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+                margin-bottom: 10px;
+            }
+            section {
+                padding: 40px 20px;
+                max-width: 800px;
+                margin: 20px auto;
+                background: #ffffff;
+                border-radius: 8px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            }
+            section h2 {
+                color: #2c3e50;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            .server-badge {
+                background: #ebf5fb;
+                border-left: 4px solid #3498db;
+                padding: 15px;
+                margin-top: 20px;
+                font-family: monospace;
+                color: #2980b9;
+            }
+            footer {
+                text-align: center;
+                padding: 20px;
+                background: #2c3e50;
+                color: white;
+                margin-top: 40px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <header>
+            <h2>Python Flask Application</h2>
+        </header>
+
+        <div class="hero">
+            <h1>{{ welcome_message }}</h1>
+            <p>Powered entirely by a single Python file using Flask.</p>
+        </div>
+
+        <section>
+            <h2>Dynamic Python Backend Integration</h2>
+            <p>This page demonstrates how backend Python variables and server logic can render dynamic content straight into a browser response using Flask's template rendering.</p>
+            
+            <div class="server-badge">
+                <strong>Server Timestamp (Generated via Python):</strong><br>
+                {{ server_time }}
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Python Web App. All rights reserved.</p>
+        </footer>
+
+    </body>
+    </html>
+    """
+
+  return render_template_string(
+      html_content, welcome_message=welcome_message, server_time=server_time
+  )
+
+
+if __name__ == "__main__":
+  app.run(debug=True, port=5000)
